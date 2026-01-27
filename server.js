@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const authRoutes = require('./src/routes/authRoutes');
 const groupRoutes = require('./src/routes/groupRoutes');
@@ -11,6 +12,7 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION_URI)
 const app = express();
 
 app.use(express.json()); // Middleware
+app.use(cookieParser()); // Middleware
 
 app.use('/auth', authRoutes);
 app.use('/groups', groupRoutes);

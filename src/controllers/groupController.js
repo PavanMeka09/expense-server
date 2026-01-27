@@ -4,18 +4,19 @@ const groupController = {
     
     create: async (request, response) => {
         try {
+            const user = request.user;
             const { 
-                name, description, adminEmail,
-                membersEmail, thumbnail,
+                name, description, membersEmail, thumbnail,
             } = request.body;
 
-            let allMembers = [adminEmail];
+            let allMembers = [user.email];
             if (membersEmail && Array.isArray(membersEmail)) {
                 allMembers = [...new Set([...allMembers, ...membersEmail])];
             }
 
             const newGroup = await groupDao.createGroup({
-                name, description, adminEmail, allMembers, thumbnail,
+                name, description, adminEmail: user.email, 
+                allMembers, thumbnail,
                 paymentStatus: {
                     amount: 0,
                     currency: 'INR',
