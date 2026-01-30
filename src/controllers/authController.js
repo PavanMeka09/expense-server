@@ -77,6 +77,48 @@ const authController = {
                 }
             });
     },
+
+    isUserLoggedIn: async (request, response) => {
+        try {
+            const token = request.cookies?.jwtToken;
+
+            if (!token) {
+                return response.status(401).json({
+                    message: 'Unauthorized access'
+                });
+            }
+
+            jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+                if (error) {
+                    return response.status(401).json({
+                        message: 'Invalid token'
+                    });
+                } else {
+                    response.json({
+                        user: user
+                    });
+                }
+
+            });
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json({
+                message: 'Internal server error'
+            });
+        }
+    },
+
+    logout: async (request, response) => {
+        try {
+            response.clearCookie('jwtToken');
+            response.json({ message: 'Logout successfull' });
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json({
+                message: 'Internal server error'
+            });
+        }
+    },
 };
 
 module.exports = authController;
