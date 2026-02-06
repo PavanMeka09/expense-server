@@ -31,7 +31,8 @@ const groupDao = {
     },
 
     getGroupByStatus: async (status) => {
-        // Querying based on the nested paymentStatus.isPaid boolean
+        // Take email as the input, then filter groups by email
+        // Check in membersEmail field.
         return await Group.find({ "paymentStatus.isPaid": status });
     },
 
