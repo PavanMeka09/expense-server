@@ -51,6 +51,3 @@ const groupDao = {
 };
 
 module.exports = groupDao;
-
-
-// test
