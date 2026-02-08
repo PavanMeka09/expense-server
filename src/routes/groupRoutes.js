@@ -1,17 +1,18 @@
 const express = require('express');
 const groupController = require('../controllers/groupController');
 const authMiddleware = require('../middlewares/authMiddleware');
+const authorizeMiddleware = require('../middlewares/authorizeMiddleware');
 
 const router = express.Router();
 
 router.use(authMiddleware.protect);
 
-router.post('/create', groupController.create);
-router.put('/update', groupController.update);
-router.patch('/members/add', groupController.addMembers);
-router.patch('/members/remove', groupController.removeMembers);
-router.get('/my-groups', groupController.getGroupsByUser);
-router.get('/status', groupController.getGroupsByPaymentStatus);
-router.get('/:groupId/audit', groupController.getAudit);
+router.post('/create', authorizeMiddleware('group:create'), groupController.create);
+router.put('/update', authorizeMiddleware('group:create'), groupController.update);
+router.patch('/members/add', authorizeMiddleware('group:create'), groupController.addMembers);
+router.patch('/members/remove', authorizeMiddleware('group:create'), groupController.removeMembers);
+router.get('/my-groups', authorizeMiddleware('group:create'), groupController.getGroupsByUser);
+router.get('/status', authorizeMiddleware('group:create'), groupController.getGroupsByPaymentStatus);
+router.get('/:groupId/audit', authorizeMiddleware('group:create'), groupController.getAudit);
 
 module.exports = router;

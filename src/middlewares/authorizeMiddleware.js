@@ -2,7 +2,6 @@ const permission = require('../utility/permissions');
 
 const authorize = (requiredPermission) => {
 
-  src / middlewares / authorizeMiddleware.js + 25
   return (request, response, next) => {
     // AuthMiddleware must run before this middleware so that
     // we can have access to user object.
