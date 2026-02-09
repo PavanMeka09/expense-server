@@ -14,6 +14,7 @@ router.patch('/members/remove', authorizeMiddleware('group:create'), groupContro
 router.get('/my-groups', authorizeMiddleware('group:create'), groupController.getGroupsByUser);
 router.get('/status', authorizeMiddleware('group:create'), groupController.getGroupsByPaymentStatus);
 router.get('/:groupId/details', authorizeMiddleware('group:create'), groupController.getGroupDetails);
+router.get('/:groupId/transactions', authorizeMiddleware('group:create'), groupController.getGroupTransactions);
 router.get('/:groupId/audit', authorizeMiddleware('group:create'), groupController.getAudit);
 
 module.exports = router;

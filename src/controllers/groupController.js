@@ -1,4 +1,5 @@
 const groupDao = require("../dao/groupDao");
+const expenseDao = require("../dao/expenseDao");
 
 const groupController = {
 
@@ -106,6 +107,23 @@ const groupController = {
             });
         } catch (error) {
             response.status(500).json({ message: "Error fetching group details" });
+        }
+    },
+
+    getGroupTransactions: async (request, response) => {
+        try {
+            const { groupId } = request.params;
+            const email = request.user.email;
+
+            const group = await groupDao.getGroupForMember(groupId, email);
+            if (!group) {
+                return response.status(404).json({ message: "Group not found" });
+            }
+
+            const transactions = await expenseDao.getByGroupId(groupId);
+            response.status(200).json(transactions);
+        } catch (error) {
+            response.status(500).json({ message: "Error fetching transactions" });
         }
     },
 
