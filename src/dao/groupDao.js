@@ -31,9 +31,14 @@ const groupDao = {
     },
 
     getGroupByStatus: async (status) => {
-        // Take email as the input, then filter groups by email
-        // Check in membersEmail field.
         return await Group.find({ "paymentStatus.isPaid": status });
+    },
+
+    getGroupForMember: async (groupId, email) => {
+        return await Group.findOne({
+            _id: groupId,
+            membersEmail: email
+        });
     },
 
     /**
@@ -43,8 +48,6 @@ const groupDao = {
      * @param {*} groupId 
      */
     getAuditLog: async (groupId) => {
-        // Based on your schema, the most relevant "settled" info 
-        // is the date within paymentStatus.
         const group = await Group.findById(groupId).select('paymentStatus.date');
         return group ? group.paymentStatus.date : null;
     }

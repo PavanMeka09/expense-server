@@ -13,6 +13,7 @@ router.patch('/members/add', authorizeMiddleware('group:create'), groupControlle
 router.patch('/members/remove', authorizeMiddleware('group:create'), groupController.removeMembers);
 router.get('/my-groups', authorizeMiddleware('group:create'), groupController.getGroupsByUser);
 router.get('/status', authorizeMiddleware('group:create'), groupController.getGroupsByPaymentStatus);
+router.get('/:groupId/details', authorizeMiddleware('group:create'), groupController.getGroupDetails);
 router.get('/:groupId/audit', authorizeMiddleware('group:create'), groupController.getAudit);
 
 module.exports = router;
