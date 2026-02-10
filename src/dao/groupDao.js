@@ -41,6 +41,14 @@ const groupDao = {
         });
     },
 
+    updatePaymentStatus: async (groupId, paymentStatus) => {
+        return await Group.findByIdAndUpdate(
+            groupId,
+            { paymentStatus },
+            { new: true }
+        );
+    },
+
     /**
      * We'll only return when was the last time group
      * was settled to begin with.
